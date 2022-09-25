@@ -125,7 +125,7 @@ open class PhotoPickerController: UINavigationController {
             config.maximumSelectedVideoCount == 1 &&
             config.selectOptions.isPhoto && config.selectOptions.isVideo &&
             config.photoList.cell.singleVideoHideSelect {
-            singleVideo = true
+            singleVideo = false
         }
         isPreviewAsset = false
         isExternalPickerPreview = false
