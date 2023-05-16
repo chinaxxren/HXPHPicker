@@ -53,17 +53,21 @@
     - [x] iOS
     - [x] iPadOS
 - [x] Internationalization support
-    - [x] English (en)
-    - [x] Chinese, Simplified (zh-Hans)
-    - [x] Chinese, traditional (zh-Hant)
-    - [x] Japanese (ja)
-    - [x] Korean (ko)
-    - [x] Thai (th)
-    - [x] Indonesian (id)
-    - [x] Vietnamese (vi)
-    - [x] Custom language (custom)
-    - [ ] More support... (Pull requests welcome)
-
+    - [x] 🇬🇧 English (en)
+    - [x] 🇨🇳 Chinese, Simplified (zh-Hans)
+    - [x] 🇨🇳 Chinese, traditional (zh-Hant)
+    - [x] 🇯🇵 Japanese (ja)
+    - [x] 🇰🇷 Korean (ko)
+    - [x] 🇹🇭 Thai (th)
+    - [x] 🇮🇳 Indonesian (id)
+    - [x] 🇻🇳 Vietnamese (vi)
+    - [x] 🇷🇺 russian (ru)
+    - [x] 🇩🇪 german (de)
+    - [x] 🇫🇷 french (fr)
+    - [x] 🇸🇦 arabic (ar)
+    - [x] ✍️ Custom language (custom)
+    - [ ] 🤝 More support... (Pull requests welcome)
+    
 ## <a id="Requirements"></a> Requirements
 
 - iOS 12.0+
@@ -78,7 +82,7 @@
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/SilenceLove/HXPHPicker.git", .upToNextMajor(from: "1.4.3"))
+    .package(url: "https://github.com/SilenceLove/HXPHPicker.git", .upToNextMajor(from: "1.4.6"))
 ]
 ```
 
@@ -88,7 +92,7 @@ Add this to Podfile, and then update dependency:
 
 ```swift
 
-iOS 12.0 ↑
+iOS 12.0+
 pod 'HXPHPicker'
 
 /// No Kingfisher
@@ -105,7 +109,7 @@ pod `HXPHPicker/Editor/Lite`
 /// Only Camera
 pod `HXPHPicker/Camera`
 
-iOS 10.0 ↑
+iOS 10.0+
 pod 'HXPHPicker-Lite'
 pod 'HXPHPicker-Lite/Picker'
 pod 'HXPHPicker-Lite/Editor'
@@ -204,6 +208,9 @@ extension ViewController: PhotoPickerControllerDelegate {
 
 | Version | Release Date | Xcode | Swift | iOS |
 | ---- | ----  | ---- | ---- | ---- |
+| [v1.4.6](https://github.com/SilenceLove/HXPHPicker/blob/main/Documentation/RELEASE_NOTE.md#146) | 2022-11-20 | 14.0.0 | 5.7.0 | 12.0+ |
+| [v1.4.5](https://github.com/SilenceLove/HXPHPicker/blob/main/Documentation/RELEASE_NOTE.md#145) | 2022-11-07 | 14.0.0 | 5.7.0 | 12.0+ |
+| [v1.4.4](https://github.com/SilenceLove/HXPHPicker/blob/main/Documentation/RELEASE_NOTE.md#144) | 2022-10-26 | 14.0.0 | 5.7.0 | 12.0+ |
 | [v1.4.3](https://github.com/SilenceLove/HXPHPicker/blob/main/Documentation/RELEASE_NOTE.md#143) | 2022-09-15 | 14.0.0 | 5.7.0 | 12.0+ |
 | [v1.4.2](https://github.com/SilenceLove/HXPHPicker/blob/main/Documentation/RELEASE_NOTE.md#142) | 2022-09-13 | 13.1.0 | 5.4.2 | 12.0+ |
 | [v1.4.1](https://github.com/SilenceLove/HXPHPicker/blob/main/Documentation/RELEASE_NOTE.md#141) | 2022-05-24 | 13.1.0 | 5.4.2 | 12.0+ |
@@ -223,5 +230,10 @@ extension ViewController: PhotoPickerControllerDelegate {
 
 HXPHPicker is released under the MIT license. See LICENSE for details.
 
+## Support
+* [**★ Star**](#) this repo.
+* Support with <img src="https://github.com/SilenceLove/HXPHPicker/blob/main/Documentation/Support/ap.jpeg" width = "100" height = "135.75" /> or <img src="https://github.com/SilenceLove/HXPHPicker/blob/main/Documentation/Support/wp.jpeg" width = "100" height = "135.75" />
 
 [🔝](#readme)
+
+

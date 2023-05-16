@@ -69,11 +69,11 @@ class VideoFilterCompositor: NSObject, AVVideoCompositing {
         for request: AVAsynchronousVideoCompositionRequest
     ) -> CVPixelBuffer? {
         guard let instruction = request.videoCompositionInstruction as? CustomVideoCompositionInstruction,
-              let trackID = instruction.requiredSourceTrackIDs?.first as? CMPersistentTrackID,
-              let pixelBuffer = request.sourceFrame(byTrackID: trackID) else {
+              let trackID = instruction.requiredSourceTrackIDs?.first as? CMPersistentTrackID else {
             return nil
         }
-        guard let sourcePixelBuffer = fixOrientation(
+        guard let pixelBuffer = request.sourceFrame(byTrackID: trackID),
+              let sourcePixelBuffer = fixOrientation(
                 pixelBuffer,
                 instruction.videoOrientation,
                 instruction.cropSizeData
@@ -81,7 +81,7 @@ class VideoFilterCompositor: NSObject, AVVideoCompositing {
               let resultPixelBuffer = applyFillter(
                 sourcePixelBuffer,
                 instruction.filterInfo,
-                instruction.filterValue
+                instruction.filterParameters
               )
         else {
             return renderContext?.newPixelBuffer()
@@ -124,6 +124,7 @@ class VideoFilterCompositor: NSObject, AVVideoCompositing {
             } else {
                 ciImage = ciImage.oriented(forExifOrientation: 8)
             }
+            size = .init(width: size.height, height: size.width)
         case .landscapeRight:
             break
         case .landscapeLeft:
@@ -132,7 +133,6 @@ class VideoFilterCompositor: NSObject, AVVideoCompositing {
             } else {
                 ciImage = ciImage.oriented(forExifOrientation: 3)
             }
-            size = .init(width: size.height, height: size.width)
         @unknown default:
             break
         }
@@ -234,14 +234,14 @@ class VideoFilterCompositor: NSObject, AVVideoCompositing {
     func applyFillter(
         _ pixelBuffer: CVPixelBuffer,
         _ info: PhotoEditorFilterInfo?,
-        _ value: Float
+        _ parameters: [PhotoEditorFilterParameterInfo]
     ) -> CVPixelBuffer? {
         let ciImage = CIImage(cvPixelBuffer: pixelBuffer)
         let size = CGSize(
             width: CVPixelBufferGetWidth(pixelBuffer),
             height: CVPixelBufferGetHeight(pixelBuffer)
         )
-        if let outputImage = info?.videoFilterHandler?(ciImage.clampedToExtent(), value),
+        if let outputImage = info?.videoFilterHandler?(ciImage.clampedToExtent(), parameters),
            let newPixelBuffer = PhotoTools.createPixelBuffer(size) {
             context.render(outputImage, to: newPixelBuffer)
             return newPixelBuffer
@@ -284,7 +284,7 @@ class CustomVideoCompositionInstruction: NSObject, AVVideoCompositionInstruction
     let videoOrientation: AVCaptureVideoOrientation
     let cropSizeData: VideoEditorCropSizeData?
     let filterInfo: PhotoEditorFilterInfo?
-    let filterValue: Float
+    let filterParameters: [PhotoEditorFilterParameterInfo]
     init(
         sourceTrackIDs: [NSValue],
         watermarkTrackID: CMPersistentTrackID?,
@@ -292,7 +292,7 @@ class CustomVideoCompositionInstruction: NSObject, AVVideoCompositionInstruction
         videoOrientation: AVCaptureVideoOrientation,
         cropSizeData: VideoEditorCropSizeData?,
         filterInfo: PhotoEditorFilterInfo? = nil,
-        filterValue: Float = 0
+        filterParameters: [PhotoEditorFilterParameterInfo] = []
     ) {
         requiredSourceTrackIDs = sourceTrackIDs
         if let watermarkTrackID = watermarkTrackID {
@@ -306,7 +306,7 @@ class CustomVideoCompositionInstruction: NSObject, AVVideoCompositionInstruction
         self.videoOrientation = videoOrientation
         self.cropSizeData = cropSizeData
         self.filterInfo = filterInfo
-        self.filterValue = filterValue
+        self.filterParameters = filterParameters
         super.init()
     }
 }
